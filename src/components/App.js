@@ -1,0 +1,55 @@
+import React, { Component } from "react";
+import { CSSTransition } from "react-transition-group";
+import { connect } from "react-redux";
+import ContactForm from "./ContactForm/ContactForm";
+import ContactList from "./ContactList/ContactList";
+import Filter from "./Filter/Filter";
+
+import contactsOperation from "../redux/contacts/contactOperations";
+
+import "./App.css";
+
+class App extends Component {
+  componentDidMount() {
+    this.props.onFetchContacts();
+  }
+
+  render() {
+    return (
+      <div className="phoneBook_container">
+        {this.props.isLoadingContacts && <h1>грузим</h1>}
+        <CSSTransition
+          in={true}
+          appear={true}
+          classNames="title_anim"
+          timeout={500}
+          unmountOnExit
+        >
+          <h1 className="title">Phonebook</h1>
+        </CSSTransition>
+
+        <CSSTransition
+          in={true}
+          appear={true}
+          classNames="form_fade"
+          timeout={500}
+          unmountOnExit
+        >
+          <ContactForm />
+        </CSSTransition>
+        <Filter />
+        <ContactList />
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  isLoadingContacts: state.contacts.loading,
+});
+
+const mapDispatchToProps = {
+  onFetchContacts: contactsOperation.fetchContacts,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
