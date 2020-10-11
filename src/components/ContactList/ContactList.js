@@ -5,9 +5,12 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import ContactListItem from "./ContactListItem";
 import Alert from "../Alert/Alert";
 
+import contactSelectors from "../../redux/contacts/contactSelectors";
+
 import "./ContacList.css";
 
-const ContactList = ({ contacts, listNull }) => {
+const ContactList = ({ contacts }) => {
+  const listNull = contacts.length === 0 ? true : false;
   return (
     <>
       {listNull && <Alert text="No have contact" />}
@@ -22,15 +25,8 @@ const ContactList = ({ contacts, listNull }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  const { items, filter } = state.contacts;
-  const listNull = items.length === 0;
-
-  const visibleContacts = items.filter(({ name }) =>
-    name.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  return { contacts: visibleContacts, listNull: listNull };
-};
+const mapStateToProps = (state) => ({
+  contacts: contactSelectors.getVisibleContacts(state),
+});
 
 export default connect(mapStateToProps, null)(ContactList);

@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 
 import contactOperation from "../../redux/contacts/contactOperations";
+import contactSelectors from "../../redux/contacts/contactSelectors";
 import "./ContacList.css";
 
 const ContactListItem = ({ name, number, onDeleteContact }) => (
@@ -12,12 +13,9 @@ const ContactListItem = ({ name, number, onDeleteContact }) => (
   </li>
 );
 
-const mapStateToProps = (state, { id }) => {
-  const item = state.contacts.items.find((item) => item.id === id);
-  return {
-    ...item,
-  };
-};
+const mapStateToProps = (state, { id }) => ({
+  ...contactSelectors.getContactByID(state, id),
+});
 
 const mapDispatchToProps = (dispatch, { id }) => ({
   onDeleteContact: () => dispatch(contactOperation.removeContacts(id)),

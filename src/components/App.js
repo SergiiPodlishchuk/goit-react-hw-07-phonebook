@@ -6,6 +6,7 @@ import ContactList from "./ContactList/ContactList";
 import Filter from "./Filter/Filter";
 
 import contactsOperation from "../redux/contacts/contactOperations";
+import contactSelectors from "../redux/contacts/contactSelectors";
 
 import "./App.css";
 
@@ -17,7 +18,6 @@ class App extends Component {
   render() {
     return (
       <div className="phoneBook_container">
-        {this.props.isLoadingContacts && <h1>грузим</h1>}
         <CSSTransition
           in={true}
           appear={true}
@@ -38,6 +38,7 @@ class App extends Component {
           <ContactForm />
         </CSSTransition>
         <Filter />
+        {this.props.isLoadingContacts && <h1>грузим</h1>}
         <ContactList />
       </div>
     );
@@ -45,7 +46,7 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isLoadingContacts: state.contacts.loading,
+  isLoadingContacts: contactSelectors.getLoading(state),
 });
 
 const mapDispatchToProps = {

@@ -4,11 +4,9 @@ import { createReducer } from "@reduxjs/toolkit";
 import contactAction from "./contactAction";
 
 const onAddContact = (state, { payload }) => {
-  console.log(payload);
-  return [payload.contact, ...state];
+  return [payload, ...state];
 };
 const onRemoveContact = (state, action) => {
-  console.log(action.payload);
   return state.filter(({ id }) => id !== action.payload);
 };
 

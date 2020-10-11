@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 
 import contactOperations from "../../redux/contacts/contactOperations";
+import contactSelectors from "../../redux/contacts/contactSelectors";
 import Alert from "../Alert/Alert";
 
 import style from "./ContactForm.module.css";
@@ -37,15 +38,14 @@ class ContactForm extends Component {
   render() {
     const { nameContact, numberContact } = this.state;
     const { itemsArray } = this.props;
-    // console.log(itemsArray);
 
-    // const filtered = itemsArray
-    //   .map(({ name }) => name.toLowerCase())
-    //   .includes(nameContact.toLowerCase());
+    const filtered = itemsArray
+      .map(({ name }) => name.toLowerCase())
+      .includes(nameContact.toLowerCase());
 
     return (
       <>
-        {/* {filtered && <Alert text="Contact already exist" />} */}
+        {filtered && <Alert text="Contact already exist" />}
         <form onSubmit={this.handleSubmit} className={style.Contact_form}>
           <label>
             Name
@@ -74,10 +74,9 @@ class ContactForm extends Component {
   }
 }
 
-const mapStateToProprs = (state) => {
-  const { items } = state.contacts;
-  return { itemsArray: items };
-};
+const mapStateToProprs = (state) => ({
+  itemsArray: contactSelectors.getContacts(state),
+});
 
 const mapDispatchToProps = (dispatch) => {
   return {

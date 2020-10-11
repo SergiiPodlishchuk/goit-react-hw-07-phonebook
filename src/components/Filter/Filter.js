@@ -3,6 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import { connect } from "react-redux";
 
 import contactActions from "../../redux/contacts/contactAction";
+import contactSelectors from "../../redux/contacts/contactSelectors";
 
 import "./Filter.css";
 
@@ -31,10 +32,10 @@ const Filter = ({ value, inputFilter, isContact }) => (
 );
 
 const mapStateToProps = (state) => {
-  if (state.contacts.items.length > 1) {
-    return { value: state.contacts.filter, isContact: true };
+  if (contactSelectors.getContacts(state).length > 1) {
+    return { value: contactSelectors.getFilter(state), isContact: true };
   }
-  return { value: state.contacts.filter };
+  return { value: contactSelectors.getFilter(state) };
 };
 
 const mapDispatchToProps = {
