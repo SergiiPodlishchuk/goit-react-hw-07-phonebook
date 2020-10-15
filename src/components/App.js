@@ -5,7 +5,7 @@ import ContactForm from "./ContactForm/ContactForm";
 import ContactList from "./ContactList/ContactList";
 import Filter from "./Filter/Filter";
 
-import contactsOperation from "../redux/contacts/contactOperations";
+import contactsOperation from "../services/fetchContacts";
 import contactSelectors from "../redux/contacts/contactSelectors";
 
 import "./App.css";

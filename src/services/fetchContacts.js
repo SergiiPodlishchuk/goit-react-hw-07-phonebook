@@ -1,26 +1,28 @@
 import axios from "axios";
-import contactAction from "./contactAction";
+import contactAction from "../redux/contacts/contactAction";
 
-const fetchContacts = () => (dispatch) => {
+axios.defaults.baseURL = "http://localhost:3004";
+
+const fetchContacts = () => async (dispatch) => {
   dispatch(contactAction.fetchContactsRequest());
-  axios
-    .get("http://localhost:3004/contacts")
+  await axios
+    .get("/contacts")
     .then(({ data }) => dispatch(contactAction.fetchContactsSuccess(data)))
     .catch((error) => dispatch(contactAction.fetchContactsError(error)));
 };
 
-const addContact = ({ name, number }) => (dispatch) => {
+const addContact = ({ name, number }) => async (dispatch) => {
   dispatch(contactAction.addContactsRequest());
-  axios
-    .post("http://localhost:3004/contacts", { name, number })
+  await axios
+    .post("/contacts", { name, number })
     .then(({ data }) => dispatch(contactAction.addContactsSuccess(data)))
     .catch((error) => dispatch(contactAction.addContactsError(error)));
 };
 
-const removeContacts = (id) => (dispatch) => {
+const removeContacts = (id) => async (dispatch) => {
   dispatch(contactAction.removeContactsRequest());
-  axios
-    .delete(`http://localhost:3004/contacts/${id}`)
+  await axios
+    .delete(`/contacts/${id}`)
     .then(() => dispatch(contactAction.removeContactsSuccess(id)))
     .catch((error) => dispatch(contactAction.removeContactsError(error)));
 };

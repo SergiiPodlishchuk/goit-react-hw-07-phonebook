@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 
-import contactOperations from "../../redux/contacts/contactOperations";
+import fetchContacts from "../../services/fetchContacts";
 import contactSelectors from "../../redux/contacts/contactSelectors";
 import Alert from "../Alert/Alert";
 
@@ -81,7 +81,7 @@ const mapStateToProprs = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     onAddContact: (name, number) =>
-      dispatch(contactOperations.addContact({ name, number })),
+      dispatch(fetchContacts.addContact({ name, number })),
   };
 };
 
